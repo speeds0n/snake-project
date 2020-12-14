@@ -112,6 +112,7 @@ class SnakeGame{
 		int m_process;
 		int m_status;
 		int m_points;
+		int m_score;
 		Level m_level;
 		Player m_player;
 		Snake m_snake;
@@ -130,7 +131,10 @@ class SnakeGame{
 			END_OF_FILE,			// 5
 			CURRENT_LEVEL,			// 6
 			NEXT_LEVEL,				// 7
-			NO_FOUND_SPAWN			// 8
+			NO_FOUND_SPAWN,			// 8
+			WELCOME_MSG,			// 9
+			START_GAME,				// 10
+			GO_TO_NEXT_LEVEL		// 11
 		};
 
 		enum GameStatus{
@@ -141,13 +145,16 @@ class SnakeGame{
 		int get_process(){ return m_process; }
 		int get_status(){ return m_status; }
 		int get_points(){ return m_points; }
+		int get_score(){ return m_score; }
 		std::string get_file_name(){ return m_file_name; }
 
 		void set_process(int value);
 		void set_status(int value);
 		void set_file_name(std::string value);
 		void set_points(int value);
+		void set_score(int value);
 		void add_point();
+		void add_score();
 
 		void initialize_game(int argc, char *argv[]);
 		void open_file(std::ifstream &file);
