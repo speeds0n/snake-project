@@ -4,12 +4,12 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-//#include <vector>
 #include <deque>
 #include <thread>
 #include <chrono>
 #include <ctime>
 #include <cstdlib>
+#include <cmath>
 
 class Snake{
 
@@ -108,8 +108,10 @@ class SnakeGame{
 	private:
 		int m_process;
 		int m_status;
+		int m_points;
 		Level m_level;
 		Player m_player;
+		Snake m_snake;
 		std::string m_file_name;
 		std::ifstream m_file;
 		std::string m_line;
@@ -135,10 +137,14 @@ class SnakeGame{
 
 		int get_process(){ return m_process; }
 		int get_status(){ return m_status; }
+		int get_points(){ return m_points; }
 		std::string get_file_name(){ return m_file_name; }
+
 		void set_process(int value);
 		void set_status(int value);
 		void set_file_name(std::string value);
+		void set_points(int value);
+		void add_point();
 
 		void initialize_game(int argc, char *argv[]);
 		void open_file(std::ifstream &file);
