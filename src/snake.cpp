@@ -55,8 +55,8 @@ void Player::solve(int x, int y){
 
 bool Player::find_solution(std::deque<std::string> maze, int x, int y){
 
+//	CurrentDir cdir;
 	if(maze[x][y] == 'x'){
-		//print_solution();
 		return true;
 	}
 	if(maze[x][y] == '#' || maze[x][y] == '$' || maze[x][y] == '.'){
@@ -70,22 +70,18 @@ bool Player::find_solution(std::deque<std::string> maze, int x, int y){
 
 	result = find_solution(maze, x, y+1);
 	if(result){	
-
 		return true;
 	}
 	result = find_solution(maze, x-1, y);
 	if(result){
-
 		return true;
 	}
 	result = find_solution(maze, x, y-1);
 	if(result){
-
 		return true;
 	}
 	result = find_solution(maze, x+1, y);
 	if(result){
-
 		return true;
 	}
 
@@ -142,6 +138,10 @@ void Player::generate_food(){
 
 void Player::delete_food(int x, int y){
 	m_maze[x][y] = ' ';
+}
+
+void Player::delete_solve(){
+	m_solution.clear();
 }
 /// Class Level ///
 void Level::set_line(int value){
@@ -294,6 +294,15 @@ void SnakeGame::process(){
 	}else if(get_process() == GameProcess::CURRENT_LEVEL){
 		if(m_player.solution_size() > 0){
 			auto dir = m_player.next_move();
+			if(m_player.get_position_x() < dir.x){
+				std::cout << "SUL" << std::endl;
+			}else if(m_player.get_position_x() > dir.x){
+				std::cout << "NORTE" << std::endl;
+			}else if(m_player.get_position_y() > dir.y){
+				std::cout << "OESTE" << std::endl;
+			}else if(m_player.get_position_y() < dir.y){
+				std::cout << "LESTE" << std::endl;
+			}
 			m_player.set_position_x(dir.x);
 			m_player.set_position_y(dir.y);
 			std::cout << "solution size: " << m_player.solution_size() << std::endl;
@@ -305,6 +314,7 @@ void SnakeGame::process(){
 		}else{
 			int aux_point_x = m_player.get_point_x();
 			int aux_point_y = m_player.get_point_y();
+			m_player.delete_solve();
 			m_player.delete_food(m_player.get_point_x(), m_player.get_point_y());
 			m_player.generate_food();
 //			m_player.solve(m_player.get_position_x(), m_player.get_position_y());
@@ -363,6 +373,7 @@ void SnakeGame::update(){
 
 		m_level.delete_maze();
 		m_player.delete_maze();
+		m_player.delete_solve();
 
 		set_process(4);
 		set_status(2);
@@ -376,12 +387,15 @@ void SnakeGame::update(){
 }
 
 void SnakeGame::render(){
-
+	std::string temp;
 	if(get_process() == GameProcess::UNINFORMED_FILE){
 		std::cout << "Name file uniformed" << std::endl;
 	}else if(get_process() == GameProcess::FILE_DIDNT_OPEN){
 		std::cout << "File did not open" << std::endl;
 	}else if(get_process() == GameProcess::FILE_OPEN){
+		std::cout << "Welcome To the" << std::endl;
+		getline(std::cin, temp);
+//		set_process(6);
 //		m_level.print_maze();
 //		m_level.delete_maze();
 	}else if(get_process() == GameProcess::CURRENT_LEVEL){

@@ -73,7 +73,9 @@ class Player{
 			int x;
 			int y;
 
-		};
+		}cdir;
+
+
 		std::deque<Direction> m_solution;
 
 	public:
@@ -101,6 +103,7 @@ class Player{
 		void generate_food();
 		void delete_food(int x, int y);
 		void solve(int x, int y);
+		void delete_solve();
 };
 
 class SnakeGame{
