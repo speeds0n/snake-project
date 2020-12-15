@@ -9,14 +9,13 @@ In the development of this project was used architecture Game Loop and Backtrack
 
 **Backtracking** is a algorthm used to find all candidates to solutions to some computational problems, each candidates to the solution is tested and abandons if that candidate that cannot be a solution. _To more info about Backtracking_ [Click Here.](https://en.wikipedia.org/wiki/Backtracking)
 
-### Execution
-
 ### Compilation
 To compile the program use [Makefile](https://en.wikipedia.org/wiki/Makefile).
 | Command | Desciption |
 | ------- | ------- |
 | `make all` | Compile All Project. |
 | `make run` | Run the Program. |
+| `make clear` | Remove files of compilation. |
 
 
 ###### Avaliable in [GitHub](https://github.com/speeds0n/snake-project) and [GitLab](https://projetos.imd.ufrn.br/edsoncassiano0/snake-project)

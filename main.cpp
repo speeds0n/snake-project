@@ -1,3 +1,8 @@
+/*!
+ * \file snake.cpp
+ * \ author Edson
+ * \date December, 2020
+ */
 #include <iostream>
 #include "lib/snake.h"
 

@@ -1,3 +1,9 @@
+/*!
+ * \file snake.cpp
+ * \ author Edson
+ * \date December, 2020
+ */
+
 #include "../lib/snake.h"
 
 /// Class Snake ///
@@ -10,6 +16,10 @@ void Snake::loss_life(){
 	m_life--;
 }
 
+void Snake::set_size(int value){
+	m_size = value;
+}
+
 /// Class Player ///
 
 void Player::set_position_x(int value){
@@ -17,6 +27,35 @@ void Player::set_position_x(int value){
 }
 void Player::set_position_y(int value){
 	m_position_y = value;
+}
+
+void Player::set_position_x_2(int value){
+	m_position_x_2 = value;
+}
+void Player::set_position_y_2(int value){
+	m_position_y_2 = value;
+}
+void Player::set_position_x_3(int value){
+	m_position_x_3 = value;
+}
+void Player::set_position_y_3(int value){
+	m_position_y_3 = value;
+}
+void Player::set_position_x_4(int value){
+	m_position_x_4 = value;
+}
+void Player::set_position_y_4(int value){
+	m_position_y_4 = value;
+}
+void Player::set_position_x_5(int value){
+	m_position_x_5 = value;
+}
+void Player::set_position_y_5(int value){
+	m_position_y_5 = value;
+}
+
+void Player::set_points(int value){
+	m_point = value;
 }
 
 void Player::set_line(int value){
@@ -34,6 +73,7 @@ void Player::set_point_x(int value){
 void Player::set_point_y(int value){
 	m_point_y = value;
 }
+
 Player::Direction Player::next_move(){
 	Direction aux;
 	aux.x = m_solution.front().x;
@@ -41,27 +81,21 @@ Player::Direction Player::next_move(){
 	m_solution.pop_front();
 	return aux;
 }
-// solve deve rebecer a do spawn
+
 void Player::solve(int x, int y){
 	if(find_solution(m_maze, x, y)){
-		//GERAR UMA NOVA COMIDA
-	}else{
-		std::cout << "teste" << std::endl;
-		std::cout << "teste" << std::endl;
-		std::cout << "teste" << std::endl;
-		std::cout << "teste" << std::endl;
 	}
 }
 
 bool Player::find_solution(std::deque<std::string> maze, int x, int y){
 
-//	CurrentDir cdir;
 	if(maze[x][y] == 'x'){
 		return true;
 	}
 	if(maze[x][y] == '#' || maze[x][y] == '$' || maze[x][y] == '.'){
 		return false;
 	}
+
 	maze[x][y] = '$';
 	Direction dir = {x, y};
 	m_solution.push_back(dir);
@@ -69,14 +103,14 @@ bool Player::find_solution(std::deque<std::string> maze, int x, int y){
 	bool result;
 
 	result = find_solution(maze, x, y+1);
-	if(result){	
-		return true;
-	}
-	result = find_solution(maze, x-1, y);
 	if(result){
 		return true;
 	}
 	result = find_solution(maze, x, y-1);
+	if(result){
+		return true;
+	}
+	result = find_solution(maze, x-1, y);
 	if(result){
 		return true;
 	}
@@ -96,11 +130,18 @@ void Player::add_line(std::string value){
 void Player::print_maze(){
 
 	int i{0}, j{0};
-
 	while(i < get_line()){
 		j = 0;
 		while(j < get_colmn()){
 			if(i == get_position_x() && j == get_position_y()){
+				std::cout << ">";
+			}else if(i == get_position_x_2() && j == get_position_y_2() && get_points() >= 1){
+				std::cout << ">";
+			}else if(i == get_position_x_3() && j == get_position_y_3() && get_points() >= 2){
+				std::cout << ">";
+			}else if(i == get_position_x_4() && j == get_position_y_4() && get_points() >= 3){
+				std::cout << ">";
+			}else if(i == get_position_x_5() && j == get_position_y_5() && get_points() >= 4){
 				std::cout << ">";
 			}else{
 				std::cout << m_maze[i][j];
@@ -143,6 +184,7 @@ void Player::delete_food(int x, int y){
 void Player::delete_solve(){
 	m_solution.clear();
 }
+
 /// Class Level ///
 void Level::set_line(int value){
 	m_line = value;
@@ -301,11 +343,46 @@ void SnakeGame::process(){
 			set_process(3);
 		}
 	}else if(get_process() == GameProcess::CURRENT_LEVEL){
+
 		if(m_player.solution_size() > 0){
 
 			auto dir = m_player.next_move();
-			m_player.set_position_x(dir.x);
-			m_player.set_position_y(dir.y);
+			if(get_points() == 0){
+				m_player.set_position_x(dir.x);
+				m_player.set_position_y(dir.y);
+			}else if(get_points() == 1){
+				m_player.set_position_x_2(m_player.get_position_x());
+				m_player.set_position_y_2(m_player.get_position_y());
+				m_player.set_position_x(dir.x);
+				m_player.set_position_y(dir.y);
+			}else if(get_points() == 2){
+				m_player.set_position_x_3(m_player.get_position_x_2());
+				m_player.set_position_y_3(m_player.get_position_y_2());
+				m_player.set_position_x_2(m_player.get_position_x());
+				m_player.set_position_y_2(m_player.get_position_y());
+				m_player.set_position_x(dir.x);
+				m_player.set_position_y(dir.y);
+			}else if(get_points() == 3){
+				m_player.set_position_x_4(m_player.get_position_x_3());
+				m_player.set_position_y_4(m_player.get_position_y_3());
+				m_player.set_position_x_3(m_player.get_position_x_2());
+				m_player.set_position_y_3(m_player.get_position_y_2());
+				m_player.set_position_x_2(m_player.get_position_x());
+				m_player.set_position_y_2(m_player.get_position_y());
+				m_player.set_position_x(dir.x);
+				m_player.set_position_y(dir.y);
+			}else if(get_points() == 4){
+				m_player.set_position_x_5(m_player.get_position_x_4());
+				m_player.set_position_y_5(m_player.get_position_y_4());
+				m_player.set_position_x_4(m_player.get_position_x_3());
+				m_player.set_position_y_4(m_player.get_position_y_3());
+				m_player.set_position_x_3(m_player.get_position_x_2());
+				m_player.set_position_y_3(m_player.get_position_y_2());
+				m_player.set_position_x_2(m_player.get_position_x());
+				m_player.set_position_y_2(m_player.get_position_y());
+				m_player.set_position_x(dir.x);
+				m_player.set_position_y(dir.y);
+			}
 
 		}else{
 
@@ -315,13 +392,15 @@ void SnakeGame::process(){
 			m_player.delete_food(m_player.get_point_x(), m_player.get_point_y());
 			m_player.generate_food();
 			m_player.solve(aux_point_x, aux_point_y);
-
 			if(get_points() < 4){
 				add_point();
+				m_snake.set_size(get_points());
 				add_score();
+				m_player.set_points(get_points());
 			}else{
 				set_process(7);
 				set_points(0);
+				m_player.set_points(0);
 			}
 		}
 
@@ -384,6 +463,7 @@ void SnakeGame::update(){
 	}else if(get_process() == GameProcess::START_GAME){
 		read_file(m_file);
 		set_status(2);
+	
 		if(m_level.check_spawn()){
 			m_player.set_position_x(m_level.get_spawn_x());
 			m_player.set_position_y(m_level.get_spawn_y());
@@ -402,8 +482,24 @@ void SnakeGame::update(){
 		m_player.delete_maze();
 		m_player.delete_solve();
 
-		set_process(10);
+		set_process(6);
 		set_status(2);
+
+		read_file(m_file);
+		set_status(2);
+	
+		if(m_level.check_spawn()){
+			m_player.set_position_x(m_level.get_spawn_x());
+			m_player.set_position_y(m_level.get_spawn_y());
+			m_player.set_line(m_level.get_line());
+			m_player.set_colmn(m_level.get_colmn());
+			m_player.generate_food();
+			m_player.solve(m_level.get_spawn_x(), m_level.get_spawn_y());
+			set_points(0);
+			set_process(6);
+		}else{
+			set_process(8);
+		}
 
 		if(m_file.eof()){
 			set_process(5);
@@ -475,7 +571,7 @@ void SnakeGame::render(){
 	}else if(get_process() == GameProcess::GO_TO_NEXT_LEVEL){
 
 		std::cout << "+------------------------------------+" << std::endl;
-		std::cout << "| Press <ENTER> to go to next level! |" << std::endl;
+		std::cout << "|          Next Level!               |" << std::endl;
 		std::cout << "+------------------------------------+" << std::endl;
 	}
 }
